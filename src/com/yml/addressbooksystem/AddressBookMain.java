@@ -13,7 +13,7 @@ class AddressBookMain{
 
         boolean flag = true;
         while(flag){
-            out.println("Select option\n1. Create contact\n2. Display Address Book\n3.Edit Contact\n4. Exit");
+            out.println("Select option\n1. Create contact\n2. Display Address Book\n3. Edit Contact\n4. Delete Contact\n5. Exit");
             int choice = in.nextInt();
             in.nextLine();
 
@@ -28,6 +28,9 @@ class AddressBookMain{
                     editContact();
                     break;
                 case 4:
+                    deleteContact();
+                    break;
+                case 5:
                     flag = false;
                     break;
                 default:
@@ -41,8 +44,36 @@ class AddressBookMain{
         in.close();
     }
 
+    private static void deleteContact() {
+        Contact deleteContact = null;
+        Set<Contact> contacts = AddressBook.getInstance().getAddressBook();
+        Scanner in = new Scanner(System.in);
+        PrintWriter out = new PrintWriter(System.out,true);
+
+        out.println();
+        out.println("Editing Menu");
+        out.println("Enter the First Name");
+        String firstName = in.nextLine();
+        out.println("Enter the Last Name");
+        String lastName = in.nextLine();
+
+        for (Contact contact : contacts) {
+            if (contact.getFirstName().equals(firstName) && contact.getLastName().equals(lastName)) {
+                deleteContact = contact;
+            }
+        }
+
+        if (deleteContact == null) {
+            out.println("Contact Not Found");
+        }
+        else {
+            contacts.remove(deleteContact);
+            out.println("Contact Deleted");
+            out.println();
+        }
+    }
+
     private static void editContact() {
-        boolean flag = false;
         Contact editContact = null;
         Set<Contact> contacts = AddressBook.getInstance().getAddressBook();
         Scanner in = new Scanner(System.in);
@@ -58,11 +89,10 @@ class AddressBookMain{
         for (Contact contact : contacts) {
             if (contact.getFirstName().equals(firstName) && contact.getLastName().equals(lastName)) {
                 editContact = contact;
-                flag = true;
             }
         }
 
-        if (!flag) {
+        if (editContact == null) {
             out.println("Contact Not Found");
             return;
         }
