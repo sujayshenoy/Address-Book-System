@@ -3,7 +3,7 @@ import java.util.*;
 public class AddressBook {
     private static AddressBook instance;
 
-    private List<Contact> contacts = new ArrayList<Contact>();
+    private Set<Contact> contacts = new HashSet<Contact>();
 
     private AddressBook(){
 
@@ -20,8 +20,9 @@ public class AddressBook {
         contacts.add(c);
     }
     
-    public List<Contact> getAddressBook() {
+    public Set<Contact> getAddressBook() {
         return contacts;
     }
 
+    
 }
