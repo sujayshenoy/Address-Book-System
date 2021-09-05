@@ -12,6 +12,7 @@ class AddressBookMain{
         out.println("Welcome to Address Book Program");
 
         boolean flag = true;
+        
         while(flag){
             out.println("Select option\n1. Create contact\n2. Display Address Book\n3. Edit Contact\n4. Delete Contact\n5. Exit");
             int choice = in.nextInt();

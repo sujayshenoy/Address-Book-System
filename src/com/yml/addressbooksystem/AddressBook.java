@@ -2,7 +2,6 @@ import java.util.*;
 
 public class AddressBook {
     private static AddressBook instance;
-
     private Set<Contact> contacts = new HashSet<Contact>();
 
     private AddressBook(){
