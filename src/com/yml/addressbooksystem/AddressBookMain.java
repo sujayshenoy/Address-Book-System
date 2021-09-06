@@ -55,6 +55,7 @@ class AddressBookMain {
         PrintWriter out = new PrintWriter(System.out,true);
         Scanner in = new Scanner(System.in);
 
+        out.println();
         out.println("1. Create New Address Book\n2. Select from existing");
         int choice = in.nextInt();
         in.nextLine();
@@ -62,6 +63,11 @@ class AddressBookMain {
         if (choice == 1) {
             out.println("Enter the name for Address Book");
             String bookName = in.nextLine();
+            if (addressBooks.get(bookName) != null) {
+                out.println("Address Book already exists");
+                chooseAddressBook();
+                return;
+            }
             addressBooks.put(bookName, new AddressBook());
             currentBook = addressBooks.get(bookName);
             out.println("New address book created");
@@ -80,6 +86,12 @@ class AddressBookMain {
             }
             out.println("Enter the name of address book");
             String bookName = in.nextLine();
+
+            if (addressBooks.get(bookName) == null) {
+                out.println("Address Book "+bookName+" does not exist");
+                chooseAddressBook();
+                return;
+            }
             currentBook = addressBooks.get(bookName);
         }
     }
@@ -217,9 +229,19 @@ class AddressBookMain {
         Contact contact = new Contact();
 
         out.println("Enter the First Name");
-        contact.setFirstName(in.nextLine());
+        String firstName = in.nextLine();
         out.println("Enter the Last Name");
-        contact.setLastName(in.nextLine());
+        String lastName = in.nextLine();
+
+        for (Contact con : currentBook.getAddressBook()) {
+            if (firstName.equals(con.getFirstName()) && lastName.equals(con.getLastName())) {
+                out.println("Contact Already exists");
+                return;
+            }
+        }
+
+        contact.setLastName(lastName);
+        contact.setFirstName(firstName);
         out.println("Enter the Address");
         contact.setAddress(in.nextLine());
         out.println("Enter the City");
