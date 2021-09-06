@@ -217,9 +217,19 @@ class AddressBookMain {
         Contact contact = new Contact();
 
         out.println("Enter the First Name");
-        contact.setFirstName(in.nextLine());
+        String firstName = in.nextLine();
         out.println("Enter the Last Name");
-        contact.setLastName(in.nextLine());
+        String lastName = in.nextLine();
+
+        for (Contact con : AddressBook.getInstance().getAddressBook()) {
+            if (firstName.equals(con.getFirstName()) && lastName.equals(con.getLastName())) {
+                out.println("Contact Already exists");
+                return;
+            }
+        }
+
+        contact.setLastName(lastName);
+        contact.setFirstName(firstName);
         out.println("Enter the Address");
         contact.setAddress(in.nextLine());
         out.println("Enter the City");
