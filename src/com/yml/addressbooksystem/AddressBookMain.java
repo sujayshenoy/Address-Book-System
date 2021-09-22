@@ -233,13 +233,6 @@ class AddressBookMain {
         out.println("Enter the Last Name");
         String lastName = in.nextLine();
 
-        for (Contact con : currentBook.getAddressBook()) {
-            if (firstName.equals(con.getFirstName()) && lastName.equals(con.getLastName())) {
-                out.println("Contact Already exists");
-                return;
-            }
-        }
-
         contact.setLastName(lastName);
         contact.setFirstName(firstName);
         out.println("Enter the Address");
