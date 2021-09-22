@@ -1,8 +1,10 @@
 import java.io.PrintWriter;
+import java.math.BigInteger;
 import java.util.List;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 
 class AddressBookMain {
     static Map<String, AddressBook> addressBooks = new HashMap<String, AddressBook>();
@@ -12,12 +14,13 @@ class AddressBookMain {
         Scanner in = new Scanner(System.in);
 
         out.println("Welcome to Address Book Program");
+        addSomeContacts();
 
         chooseAddressBook();
 
         boolean flag = true;
         while (flag) {     
-            out.println("Select option\n1. Create contact\n2. Display Address Book\n3. Edit Contact\n4. Delete Contact\n5. Change Address Book\n6. Exit");
+            out.println("Select option\n1. Create contact\n2. Display Address Book\n3. Edit Contact\n4. Delete Contact\n5. Search Contact\n6. Change Address Book\n7. Exit");
             int choice = in.nextInt();
             in.nextLine();
 
@@ -35,9 +38,12 @@ class AddressBookMain {
                     deleteContact();
                     break;
                 case 5:
-                    chooseAddressBook();
+                    search();
                     break;
                 case 6:
+                    chooseAddressBook();
+                    break;
+                case 7:
                     flag = false;
                     break;
                 default:
@@ -49,6 +55,99 @@ class AddressBookMain {
 
         out.close();
         in.close();
+    }
+
+    private static void addSomeContacts() {
+        addressBooks.put("book1", new AddressBook());
+        addressBooks.put("book2", new AddressBook());
+        currentBook = addressBooks.get("book1");
+
+        Contact contact1 = new Contact();
+        contact1.setFirstName("Thor");
+        contact1.setLastName("Odinson");
+        contact1.setAddress("Asgard");
+        contact1.setEmail("thor@gmail.com");
+        contact1.setPhone(new BigInteger("9837283827"));
+        contact1.setState("Karnataka");
+        contact1.setCity("Bangalore");
+        contact1.setZip(513212);
+
+        currentBook.addContact(contact1);
+
+        Contact contact2 = new Contact();
+        contact2.setFirstName("Tony");
+        contact2.setLastName("Stark");
+        contact2.setAddress("abc , Maharashtra");
+        contact2.setEmail("thor@gmail.com");
+        contact2.setPhone(new BigInteger("9837283827"));
+        contact2.setState("Maharashtra");
+        contact2.setCity("Mumbai");
+        contact2.setZip(513212);
+
+        currentBook.addContact(contact2);
+
+        Contact contact3 = new Contact();
+        contact3.setFirstName("Bjorn");
+        contact3.setLastName("Ironside");
+        contact3.setAddress("Jayanagar, Karnataka");
+        contact3.setEmail("thor@gmail.com");
+        contact3.setPhone(new BigInteger("9837283827"));
+        contact3.setState("Karnataka");
+        contact3.setCity("Bangalore");
+        contact3.setZip(513212);
+        currentBook.addContact(contact3);
+
+        currentBook = addressBooks.get("book2");
+
+        Contact contact4 = new Contact();
+        contact4.setFirstName("John");
+        contact4.setLastName("Snow");
+        contact4.setAddress("Dombivli, Maharashtra");
+        contact4.setEmail("thor@gmail.com");
+        contact4.setPhone(new BigInteger("9837283827"));
+        contact4.setState("Maharashtra");
+        contact4.setCity("Mumbai");
+        contact4.setZip(513212);
+        currentBook.addContact(contact4);
+    }
+
+    private static void search() {
+        PrintWriter out = new PrintWriter(System.out,true);
+        Scanner in = new Scanner(System.in);
+
+        out.println();
+        out.println("1. Search By State\n2. Search By City");
+        int choice = in.nextInt();
+        in.nextLine();
+
+        switch (choice) {
+            case 1:
+                out.println("Enter the name of the State");
+                String stateName = in.nextLine();
+                for (AddressBook addressBook : addressBooks.values()) {
+                    List<Contact> sameStateContacts = addressBook.getAddressBook().stream().filter((c) -> {
+                        return c.getState().equals(stateName);
+                    }).collect(Collectors.toList());
+
+                    for (Contact contact : sameStateContacts) {
+                        out.println(contact);
+                    }
+                }
+                break;
+            case 2:
+                out.println("Enter the name of the City");
+                String cityName = in.nextLine();
+                for (AddressBook addressBook : addressBooks.values()) {
+                    List<Contact> sameCityContacts = addressBook.getAddressBook().stream().filter((c) -> {
+                        return c.getCity().equals(cityName);
+                    }).collect(Collectors.toList());
+
+                    for (Contact contact : sameCityContacts) {
+                        out.println(contact);
+                    }
+                }
+                break;
+        }
     }
 
     private static void chooseAddressBook() {
