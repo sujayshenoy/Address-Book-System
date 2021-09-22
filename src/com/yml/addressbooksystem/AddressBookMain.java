@@ -1,5 +1,5 @@
 import java.io.PrintWriter;
-import java.util.Set;
+import java.util.List;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
@@ -98,7 +98,7 @@ class AddressBookMain {
 
     private static void deleteContact() {
         Contact deleteContact = null;
-        Set<Contact> contacts = currentBook.getAddressBook();
+        List<Contact> contacts = currentBook.getAddressBook();
         Scanner in = new Scanner(System.in);
         PrintWriter out = new PrintWriter(System.out,true);
 
@@ -127,7 +127,7 @@ class AddressBookMain {
 
     private static void editContact() {
         Contact editContact = null;
-        Set<Contact> contacts = currentBook.getAddressBook();
+        List<Contact> contacts = currentBook.getAddressBook();
         Scanner in = new Scanner(System.in);
         PrintWriter out = new PrintWriter(System.out,true);
 
@@ -212,7 +212,7 @@ class AddressBookMain {
     }
 
     private static void displayAddressBook() {
-        Set<Contact> contacts = currentBook.getAddressBook();
+        List<Contact> contacts = currentBook.getAddressBook();
         if (contacts.size() == 0) {
             System.out.println("Address Book is Empty");
         }
