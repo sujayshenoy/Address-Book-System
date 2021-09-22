@@ -1,6 +1,6 @@
 import java.math.BigInteger;
 
-public class Contact {
+public class Contact{
     private String firstName;
     private String lastName;
     private String address;
