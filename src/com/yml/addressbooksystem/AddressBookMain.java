@@ -2,6 +2,7 @@ import java.io.PrintWriter;
 import java.math.BigInteger;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
@@ -373,13 +374,14 @@ class AddressBookMain {
 
     private static void displayAddressBook() {
         List<Contact> contacts = currentBook.getAddressBook();
+        Collections.sort(contacts);
         if (contacts.size() == 0) {
             System.out.println("Address Book is Empty");
         }
         else{
-            for (Contact contact : contacts) {
-                System.out.println(contact);
-            }
+            contacts.stream().forEach(c -> {
+                System.out.println(c);
+            });
         } 
     }
 
