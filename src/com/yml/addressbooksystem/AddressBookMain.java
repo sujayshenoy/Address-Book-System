@@ -3,6 +3,7 @@ import java.math.BigInteger;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
@@ -373,16 +374,33 @@ class AddressBookMain {
     }
 
     private static void displayAddressBook() {
+        Scanner in = new Scanner(System.in);
         List<Contact> contacts = currentBook.getAddressBook();
-        Collections.sort(contacts);
         if (contacts.size() == 0) {
             System.out.println("Address Book is Empty");
+            return;
         }
-        else{
-            contacts.stream().forEach(c -> {
-                System.out.println(c);
-            });
-        } 
+
+        System.out.println("Sort by\n1. Name\n2. City\n3. State\n4. Zip");
+        int choice = in.nextInt();
+        in.nextLine();
+
+        switch (choice) {
+            case 1:
+                Collections.sort(contacts);
+                break;
+            case 2:
+                Collections.sort(contacts, new CityComparator());
+                break;
+            case 3:
+                Collections.sort(contacts, new StateComparator());
+                break;
+            case 4:
+                Collections.sort(contacts, new ZipComparator());
+                break;
+        }
+        
+        contacts.stream().forEach(c -> System.out.println(c));
     }
 
     private static void getContactInput() {
