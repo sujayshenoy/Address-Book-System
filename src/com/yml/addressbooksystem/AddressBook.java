@@ -12,7 +12,6 @@ public class AddressBook {
             }
             return false;
         }).collect(Collectors.toList());
-        System.out.println(existsInAddressBook);
 
         if (existsInAddressBook.size() == 0) {
             contacts.add(c);

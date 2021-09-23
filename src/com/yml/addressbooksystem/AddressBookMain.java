@@ -1,6 +1,7 @@
 import java.io.PrintWriter;
 import java.math.BigInteger;
 import java.util.List;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
@@ -8,6 +9,8 @@ import java.util.stream.Collectors;
 
 class AddressBookMain {
     static Map<String, AddressBook> addressBooks = new HashMap<String, AddressBook>();
+    static Map<String, List<Contact>> stateMap = new HashMap<String, List<Contact>>();
+    static Map<String, List<Contact>> cityMap = new HashMap<String, List<Contact>>();
     static AddressBook currentBook = null;
     public static void main(String args[]) {
         PrintWriter out = new PrintWriter(System.out, true);
@@ -20,7 +23,7 @@ class AddressBookMain {
 
         boolean flag = true;
         while (flag) {     
-            out.println("Select option\n1. Create contact\n2. Display Address Book\n3. Edit Contact\n4. Delete Contact\n5. Search Contact\n6. Change Address Book\n7. Exit");
+            out.println("Select option\n1. Create contact\n2. Display Address Book\n3. View By State/City\n4. Edit Contact\n5. Delete Contact\n6. Search Contact\n7. Change Address Book\n8. Exit");
             int choice = in.nextInt();
             in.nextLine();
 
@@ -32,18 +35,21 @@ class AddressBookMain {
                     displayAddressBook();
                     break;
                 case 3:
-                    editContact();
+                    viewBy();
                     break;
                 case 4:
-                    deleteContact();
+                    editContact();
                     break;
                 case 5:
-                    search();
+                    deleteContact();
                     break;
                 case 6:
-                    chooseAddressBook();
+                    search();
                     break;
                 case 7:
+                    chooseAddressBook();
+                    break;
+                case 8:
                     flag = false;
                     break;
                 default:
@@ -55,6 +61,47 @@ class AddressBookMain {
 
         out.close();
         in.close();
+    }
+
+    private static void viewBy() {
+        PrintWriter out = new PrintWriter(System.out, true);
+        Scanner in = new Scanner(System.in);
+        out.println("View By \n1. State\n2. City");
+        int choice = in.nextInt();
+        in.nextLine();
+
+        switch (choice) {
+            case 1:
+                stateMap.clear();
+                currentBook.getAddressBook().stream().forEach(c -> {
+                    addToMap("STATE", c);
+                });
+
+                for (Map.Entry<String, List<Contact>> element : stateMap.entrySet()) {
+                    out.println("State: " + element.getKey());
+                    for (Contact contact : element.getValue()) {
+                        out.println(contact);
+                        out.println();
+                    }
+                    out.println();
+                }
+                break;
+            case 2:
+                cityMap.clear();
+                currentBook.getAddressBook().stream().forEach(c -> {
+                    addToMap("CITY", c);
+                });
+
+                for (Map.Entry<String, List<Contact>> element : cityMap.entrySet()) {
+                    out.println("City: " + element.getKey());
+                    for (Contact contact : element.getValue()) {
+                        out.println(contact);
+                        out.println();
+                    }
+                    out.println();
+                }
+                break;
+        }
     }
 
     private static void addSomeContacts() {
@@ -323,7 +370,7 @@ class AddressBookMain {
     }
 
     private static void getContactInput() {
-        PrintWriter out = new PrintWriter(System.out,true);
+        PrintWriter out = new PrintWriter(System.out, true);
         Scanner in = new Scanner(System.in);
         Contact contact = new Contact();
 
@@ -350,5 +397,32 @@ class AddressBookMain {
         contact.setEmail(in.nextLine());
 
         currentBook.addContact(contact);
-    }   
+    }
+    
+    public static void addToMap(String mapName, Contact contact) {
+        if(mapName == "CITY"){
+            List<Contact> contacts = cityMap.get(contact.getCity());
+            if (contacts == null) {
+                List<Contact> contacts2 = new ArrayList<>();
+                contacts2.add(contact);
+                cityMap.put(contact.getCity(), contacts2);
+            }
+            else {
+                contacts.add(contact);
+                cityMap.put(contact.getCity(), contacts);
+            }
+        }
+        else{
+            List<Contact> contacts = stateMap.get(contact.getState());
+            if (contacts == null) {
+                List<Contact> contacts2 = new ArrayList<>();
+                contacts2.add(contact);
+                stateMap.put(contact.getState(), contacts2);
+            }
+            else {
+                contacts.add(contact);
+                stateMap.put(contact.getState(), contacts);
+            }
+        }
+    }
 }
