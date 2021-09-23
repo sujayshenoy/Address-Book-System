@@ -79,6 +79,7 @@ class AddressBookMain {
 
                 for (Map.Entry<String, List<Contact>> element : stateMap.entrySet()) {
                     out.println("State: " + element.getKey());
+                    out.println("Number of Records: "+element.getValue().size());
                     for (Contact contact : element.getValue()) {
                         out.println(contact);
                         out.println();
@@ -94,6 +95,7 @@ class AddressBookMain {
 
                 for (Map.Entry<String, List<Contact>> element : cityMap.entrySet()) {
                     out.println("City: " + element.getKey());
+                    out.println("Number of Records: "+element.getValue().size());
                     for (Contact contact : element.getValue()) {
                         out.println(contact);
                         out.println();
@@ -171,28 +173,40 @@ class AddressBookMain {
             case 1:
                 out.println("Enter the name of the State");
                 String stateName = in.nextLine();
+                long stateCount = 0;
                 for (AddressBook addressBook : addressBooks.values()) {
                     List<Contact> sameStateContacts = addressBook.getAddressBook().stream().filter((c) -> {
                         return c.getState().equals(stateName);
                     }).collect(Collectors.toList());
 
+                    stateCount += sameStateContacts.size();
+
                     for (Contact contact : sameStateContacts) {
                         out.println(contact);
                     }
                 }
+
+                out.println();
+                out.println("Number of Records: " + stateCount);
                 break;
             case 2:
                 out.println("Enter the name of the City");
                 String cityName = in.nextLine();
+                long cityCount = 0;
                 for (AddressBook addressBook : addressBooks.values()) {
                     List<Contact> sameCityContacts = addressBook.getAddressBook().stream().filter((c) -> {
                         return c.getCity().equals(cityName);
                     }).collect(Collectors.toList());
 
+                    cityCount += sameCityContacts.size();
+
                     for (Contact contact : sameCityContacts) {
                         out.println(contact);
                     }
                 }
+
+                out.println();
+                out.println("Number of Records: " + cityCount);
                 break;
         }
     }
