@@ -1,3 +1,4 @@
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.math.BigInteger;
 import java.util.List;
@@ -14,7 +15,8 @@ class AddressBookMain {
     static Map<String, List<Contact>> stateMap = new HashMap<String, List<Contact>>();
     static Map<String, List<Contact>> cityMap = new HashMap<String, List<Contact>>();
     static AddressBook currentBook = null;
-    public static void main(String args[]) {
+    static String currentBookName;
+    public static void main(String args[]) throws IOException {
         PrintWriter out = new PrintWriter(System.out, true);
         Scanner in = new Scanner(System.in);
 
@@ -25,7 +27,7 @@ class AddressBookMain {
 
         boolean flag = true;
         while (flag) {     
-            out.println("Select option\n1. Create contact\n2. Display Address Book\n3. View By State/City\n4. Edit Contact\n5. Delete Contact\n6. Search Contact\n7. Change Address Book\n8. Exit");
+            out.println("Select option\n1. Create contact\n2. Display Address Book\n3. View By State/City\n4. Edit Contact\n5. Delete Contact\n6. Search Contact\n7. Change Address Book\n8. Save to file\n9. Exit");
             int choice = in.nextInt();
             in.nextLine();
 
@@ -52,6 +54,9 @@ class AddressBookMain {
                     chooseAddressBook();
                     break;
                 case 8:
+                    currentBook.saveToFile(currentBookName);
+                    break;
+                case 9:
                     flag = false;
                     break;
                 default:
@@ -231,6 +236,7 @@ class AddressBookMain {
                 return;
             }
             addressBooks.put(bookName, new AddressBook());
+            currentBookName = bookName;
             currentBook = addressBooks.get(bookName);
             out.println("New address book created");
         }
@@ -255,6 +261,7 @@ class AddressBookMain {
                 return;
             }
             currentBook = addressBooks.get(bookName);
+            currentBookName = bookName;
         }
     }
 

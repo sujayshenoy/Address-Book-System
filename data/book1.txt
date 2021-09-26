@@ -1,0 +1,3 @@
+[address=Asgard, city=Bangalore, email=thor@gmail.com, firstName=Thor, lastName=Odinson, phone=9837283827, state=Karnataka, zip=513212]
+[address=abc , Maharashtra, city=Mumbai, email=thor@gmail.com, firstName=Tony, lastName=Stark, phone=9837283827, state=Maharashtra, zip=513212]
+[address=Jayanagar, Karnataka, city=Bangalore, email=thor@gmail.com, firstName=Bjorn, lastName=Ironside, phone=9837283827, state=Karnataka, zip=513212]
