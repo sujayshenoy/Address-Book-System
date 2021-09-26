@@ -1,3 +1,6 @@
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -25,4 +28,15 @@ public class AddressBook {
         return contacts;
     }
     
+    public void saveToFile(String fileName) throws IOException {
+        File file = new File("data/" + fileName + ".txt");
+        file.createNewFile();
+        FileWriter fileWriter = new FileWriter(file);
+
+        for (Contact contact : contacts) {
+            fileWriter.write(contact+"\n");
+        }
+        fileWriter.flush();
+        fileWriter.close();
+    }
 }
