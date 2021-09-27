@@ -3,10 +3,12 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
-
+import com.google.gson.Gson;
+import com.google.gson.stream.JsonReader;
 import com.opencsv.CSVReader;
 import com.opencsv.CSVWriter;
 import com.opencsv.exceptions.CsvException;
@@ -67,7 +69,7 @@ public class AddressBook {
     
     public void readCsvFile(String fileName) throws IOException, CsvException {
         File file = new File("data/" + fileName + ".csv");
-        PrintWriter out = new PrintWriter(System.out,true);
+        PrintWriter out = new PrintWriter(System.out, true);
         FileReader fileReader = new FileReader(file);
         CSVReader reader = new CSVReader(fileReader);
 
@@ -78,6 +80,30 @@ public class AddressBook {
                 out.flush();
             }
             out.println();
+        }
+        reader.close();
+    }
+    
+    public void writeJsonToFile(String fileName) throws IOException {
+        File file = new File("data/" + fileName + ".json");
+        Gson gson = new Gson();
+        file.createNewFile();
+        FileWriter fileWriter = new FileWriter(file);
+
+        String jsonString = gson.toJson(contacts);
+        fileWriter.write(jsonString);
+
+        fileWriter.flush();
+        fileWriter.close();
+    }
+
+    public void readFromJson(String fileName) throws IOException {
+        File file = new File("data/" + fileName + ".json");
+        Gson gson = new Gson();
+        FileReader reader = new FileReader(file);
+        Contact[] contactsFromJson = gson.fromJson(reader, Contact[].class);
+        for (Contact contact : contactsFromJson) {
+            System.out.println(contact);
         }
         reader.close();
     }
