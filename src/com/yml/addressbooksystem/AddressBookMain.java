@@ -31,7 +31,8 @@ class AddressBookMain {
         while (flag) {     
             out.println(
                     "Select option\n1. Create contact\n2. Display Address Book\n3. View By State/City\n4. Edit Contact"
-            +"\n5. Delete Contact\n6. Search Contact\n7. Change Address Book\n8. Save to file\n9. Save to CSV file\n10. Read from csv\n11. Exit");
+                            + "\n5. Delete Contact\n6. Search Contact\n7. Change Address Book\n8. Save to file\n9. Save to CSV file"
+                            + "\n10. Read from csv\n11. Save to Json file\n12. Read from Json\n13. Exit");
             int choice = in.nextInt();
             in.nextLine();
 
@@ -69,6 +70,14 @@ class AddressBookMain {
                     currentBook.readCsvFile(csvFileName);
                     break;
                 case 11:
+                    currentBook.writeJsonToFile(currentBookName);
+                    break;
+                case 12:
+                    out.println("Enter Json file to be read");
+                    String jsonFileName = in.nextLine();
+                    currentBook.readFromJson(jsonFileName);
+                    break;
+                case 13:
                     flag = false;
                     break;
                 default:
