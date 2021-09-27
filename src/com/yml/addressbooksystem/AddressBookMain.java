@@ -10,13 +10,15 @@ import java.util.Map;
 import java.util.Scanner;
 import java.util.stream.Collectors;
 
+import com.opencsv.exceptions.CsvException;
+
 class AddressBookMain {
     static Map<String, AddressBook> addressBooks = new HashMap<String, AddressBook>();
     static Map<String, List<Contact>> stateMap = new HashMap<String, List<Contact>>();
     static Map<String, List<Contact>> cityMap = new HashMap<String, List<Contact>>();
     static AddressBook currentBook = null;
     static String currentBookName;
-    public static void main(String args[]) throws IOException {
+    public static void main(String args[]) throws IOException, CsvException {
         PrintWriter out = new PrintWriter(System.out, true);
         Scanner in = new Scanner(System.in);
 
@@ -27,7 +29,9 @@ class AddressBookMain {
 
         boolean flag = true;
         while (flag) {     
-            out.println("Select option\n1. Create contact\n2. Display Address Book\n3. View By State/City\n4. Edit Contact\n5. Delete Contact\n6. Search Contact\n7. Change Address Book\n8. Save to file\n9. Exit");
+            out.println(
+                    "Select option\n1. Create contact\n2. Display Address Book\n3. View By State/City\n4. Edit Contact"
+            +"\n5. Delete Contact\n6. Search Contact\n7. Change Address Book\n8. Save to file\n9. Save to CSV file\n10. Read from csv\n11. Exit");
             int choice = in.nextInt();
             in.nextLine();
 
@@ -57,6 +61,14 @@ class AddressBookMain {
                     currentBook.saveToFile(currentBookName);
                     break;
                 case 9:
+                    currentBook.saveCsvToFile(currentBookName);
+                    break;
+                case 10:
+                    out.println("Enter CSV file to be read");
+                    String csvFileName = in.nextLine();
+                    currentBook.readCsvFile(csvFileName);
+                    break;
+                case 11:
                     flag = false;
                     break;
                 default:
